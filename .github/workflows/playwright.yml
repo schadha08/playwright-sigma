@@ -14,8 +14,10 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Create storage state from base64 secret
-        run: echo '${{ secrets.storageState }}' | base64 -d > storageState.json
+      - name: Create storage state from environment variable
+        run: echo "$STORAGE_STATE_B64" | base64 -d > storageState.json
+        env:
+          STORAGE_STATE_B64: ${{ secrets.storageStateB64 }}
       - name: Run Playwright tests
         run: npx playwright test sigma-workbook.spec.js
       - uses: actions/upload-artifact@v4
