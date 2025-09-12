@@ -9,12 +9,12 @@ test("Sigma Computing login and save session", async ({ page, context }) => {
   const emailField = page.locator(
     'input[type="email"], input[name*="email"], input[id*="email"]'
   );
-  await emailField.fill("username");
+  await emailField.fill("Fill in your real username");
 
   const passwordField = page.locator(
     'input[type="password"], input[name*="password"], input[id*="password"]'
   );
-  await passwordField.fill("password");
+  await passwordField.fill("Fill in your real password");
 
   const signInButton = page.locator('button[data-track-id="button-login"]');
   await signInButton.click();
