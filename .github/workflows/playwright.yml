@@ -14,10 +14,25 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Create storage state from environment variable
-        run: echo "$STORAGE_STATE_B64" | base64 -d > storageState.json
-        env:
-          STORAGE_STATE_B64: ${{ secrets.storageStateB64 }}
+      - name: Create minimal storage state from cookie secrets
+        run: |
+          cat > storageState.json << 'EOF'
+          {
+            "cookies": [
+              {
+                "name": "sig_refresh",
+                "value": "${{ secrets.sessionCookie }}",
+                "domain": ".sigmacomputing.com",
+                "path": "/",
+                "expires": -1,
+                "httpOnly": true,
+                "secure": true,
+                "sameSite": "None"
+              }
+            ],
+            "origins": []
+          }
+          EOF
       - name: Run Playwright tests
         run: npx playwright test sigma-workbook.spec.js
       - uses: actions/upload-artifact@v4
