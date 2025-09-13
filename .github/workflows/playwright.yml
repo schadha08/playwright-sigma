@@ -14,25 +14,9 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Create minimal storage state from cookie secrets
+      - name: Decrypt and create storage state
         run: |
-          cat > storageState.json << 'EOF'
-          {
-            "cookies": [
-              {
-                "name": "sig_refresh",
-                "value": "${{ secrets.sessionCookie }}",
-                "domain": ".sigmacomputing.com",
-                "path": "/",
-                "expires": -1,
-                "httpOnly": true,
-                "secure": true,
-                "sameSite": "None"
-              }
-            ],
-            "origins": []
-          }
-          EOF
+          echo "${{ secrets.STORAGE_STATE_KEY }}" | openssl enc -d -aes-256-cbc -pbkdf2 -in storageState.json.enc -out storageState.json -pass stdin
       - name: Run Playwright tests
         run: npx playwright test sigma-workbook.spec.js --project=chromium
       - uses: actions/upload-artifact@v4
