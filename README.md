@@ -1,6 +1,9 @@
 # Playwright Session Management and CI Setup
 
-This is a demo showing how to set up session locally and then reuse that session in Playwright tests using encrypted files for CI/CD.
+This guide will demonstrate:
+
+1. Login into any app having 2FA or third party dependencies and generate and save a session locally
+2. Reuse that session in CI securely
 
 ## Steps to Setup Session Management
 
