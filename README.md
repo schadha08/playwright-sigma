@@ -12,8 +12,9 @@ First, create your environment file and generate an encryption key:
 # Copy the example environment file
 cp .env.example .env
 
-# Generate a secure encryption key and add it to your .env file
-echo "ENCRYPT_SECRET_KEY=$(openssl rand -base64 32)" >> .env
+# Generate a secure encryption key and replace the placeholder in .env file
+ENCRYPT_KEY=$(openssl rand -base64 32)
+sed -i "" "s/ENCRYPT_SECRET_KEY=your-base64-encryption-key-here/ENCRYPT_SECRET_KEY=$ENCRYPT_KEY/" .env
 ```
 
 Now edit your `.env` file and fill in your Sigma Computing credentials:
