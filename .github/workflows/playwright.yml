@@ -16,9 +16,12 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Decrypt and create storage state
         run: |
-          echo "${{ secrets.STORAGE_STATE_KEY }}" | openssl enc -d -aes-256-cbc -pbkdf2 -in storageState.json.enc -out storageState.json -pass stdin
+          echo -n "${{ secrets.STORAGE_STATE_KEY }}" | openssl enc -d -aes-256-cbc -pbkdf2 -in storageState.json.enc -out storageState.json -pass stdin
       - name: Run Playwright tests
         run: npx playwright test sigma-workbook.spec.js --project=chromium
+      - name: Securely delete storage state
+        if: always()
+        run: shred -vuz storageState.json
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:

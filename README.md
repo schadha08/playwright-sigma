@@ -50,8 +50,9 @@ This test will:
 After obtaining your `storageState.json` file, encrypt it for secure storage in version control using the environment variable:
 
 ```bash
-# Encrypt the storage state using the environment variable
-echo "$ENCRYPT_SECRET_KEY" | openssl enc -aes-256-cbc -pbkdf2 -in storageState.json -out storageState.json.enc -pass stdin
+# Load environment variables and encrypt the storage state
+source .env
+echo -n "$ENCRYPT_SECRET_KEY" | openssl enc -aes-256-cbc -pbkdf2 -in storageState.json -out storageState.json.enc -pass stdin
 
 # Commit the encrypted file to the repository
 git add storageState.json.enc
