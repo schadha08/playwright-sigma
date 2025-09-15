@@ -49,6 +49,10 @@ After obtaining your `storageState.json` file, encrypt it for secure storage in 
 ```bash
 # Encrypt the storage state using the environment variable
 echo "$ENCRYPT_SECRET_KEY" | openssl enc -aes-256-cbc -pbkdf2 -in storageState.json -out storageState.json.enc -pass stdin
+
+# Commit the encrypted file to the repository
+git add storageState.json.enc
+git commit -m "Add encrypted storage state file"
 ```
 
 ### 3. Store Encryption Key in GitHub Secrets
