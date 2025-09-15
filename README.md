@@ -23,10 +23,14 @@ Now edit your `.env` file and fill in your Sigma Computing credentials:
 - `SIGMA_PASSWORD`: Your Sigma Computing password
 - `ENCRYPT_SECRET_KEY`: (already generated above)
 
-Then run the login test locally to authenticate and save your session in storageState.json file:
+Then install dependencies and run the login test locally to authenticate and save your session in storageState.json file:
 
 ```bash
-npx playwright test sigma-login.spec.js
+# Install all dependencies
+npm install
+
+# Run the login test with browser visible (chromium only)
+npx playwright test sigma-login.spec.js --project=chromium --headed
 ```
 
 Note: The `.env` and `storageState.json` files should never be committed since they contain your secrets
